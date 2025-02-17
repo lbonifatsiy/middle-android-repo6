@@ -1,48 +1,42 @@
 package ru.yandexpraktikum.notekeeper.di
 
 import android.content.Context
-import androidx.room.Room
-import ru.yandexpraktikum.notekeeper.data.local.db.NoteDatabase
-import ru.yandexpraktikum.notekeeper.data.local.datasource.NoteLocalDataSourceImpl
-import ru.yandexpraktikum.notekeeper.data.local.repository.NoteRepositoryImpl
-import ru.yandexpraktikum.notekeeper.data.local.mappers.DataNoteMapper
-import ru.yandexpraktikum.notekeeper.presentation.addnote.AddNoteViewModelFactory
-import ru.yandexpraktikum.notekeeper.presentation.mappers.PresentationNoteMapper
-import ru.yandexpraktikum.notekeeper.presentation.allnotes.AllNotesViewModelFactory
-import ru.yandexpraktikum.notekeeper.presentation.editnote.EditNoteViewModelFactory
+import ru.yandexpraktikum.add_note.di.AddNoteContainer
+import ru.yandexpraktikum.all_notes.di.AllNotesContainer
+import ru.yandexpraktikum.core.di.CoreContainer
+import ru.yandexpraktikum.edit_note.di.EditNoteContainer
 
-private const val DATABASE_NAME = "note_database"
 class AppContainer(
     context: Context
 ) {
-    private val noteDatabase: NoteDatabase = Room.databaseBuilder(
-        context.applicationContext,
-        NoteDatabase::class.java,
-        DATABASE_NAME
-    ).build()
 
-    private val dataMapper = DataNoteMapper()
+    private val coreContainer: CoreContainer by lazy {
+        CoreContainer(context)
+    }
 
-    private val noteLocalDataSource = NoteLocalDataSourceImpl(
-        noteDatabase.noteDao(),
-        dataMapper
-    )
-    private val noteRepository = NoteRepositoryImpl(noteLocalDataSource)
+    var allNotesContainer: AllNotesContainer? = null
+    var editNoteContainer: EditNoteContainer? = null
+    var addNoteContainer: AddNoteContainer? = null
 
-    private val presentationMapper = PresentationNoteMapper()
 
-    fun getAllNotesViewModelFactory() = AllNotesViewModelFactory(
-        noteRepository,
-        presentationMapper
-    )
+    fun initAllNotesContainer() {
+        allNotesContainer = AllNotesContainer(
+            repository = coreContainer.repository,
+            presentationMapper = coreContainer.presentationMapper
+        )
+    }
 
-    fun getAddNoteViewModelFactory() = AddNoteViewModelFactory(
-        noteRepository,
-        presentationMapper
-    )
+    fun initEditNoteContainer() {
+        editNoteContainer = EditNoteContainer(
+            repository = coreContainer.repository,
+            presentationMapper = coreContainer.presentationMapper
+        )
+    }
 
-    fun getEditNoteViewModelFactory() = EditNoteViewModelFactory(
-        noteRepository,
-        presentationMapper
-    )
+    fun initAddNoteContainer() {
+        addNoteContainer = AddNoteContainer(
+            repository = coreContainer.repository,
+            presentationNoteMapper = coreContainer.presentationMapper
+        )
+    }
 }
