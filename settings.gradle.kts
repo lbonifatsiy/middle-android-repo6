@@ -21,7 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Note Keeper"
 include(":app")
-include(":edit-note")
 include(":core")
 include(":core-ui")
 include(":all-notes")

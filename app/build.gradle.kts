@@ -43,7 +43,6 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":core-ui"))
     implementation(project(":all-notes"))
-    implementation(project(":edit-note"))
     implementation(project(":add-note"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

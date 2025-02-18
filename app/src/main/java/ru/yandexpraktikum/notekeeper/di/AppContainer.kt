@@ -4,7 +4,6 @@ import android.content.Context
 import ru.yandexpraktikum.add_note.di.AddNoteContainer
 import ru.yandexpraktikum.all_notes.di.AllNotesContainer
 import ru.yandexpraktikum.core.di.CoreContainer
-import ru.yandexpraktikum.edit_note.di.EditNoteContainer
 
 class AppContainer(
     context: Context
@@ -15,7 +14,6 @@ class AppContainer(
     }
 
     private var allNotesContainer: AllNotesContainer? = null
-    private var editNoteContainer: EditNoteContainer? = null
     private var addNoteContainer: AddNoteContainer? = null
 
 
@@ -31,20 +29,6 @@ class AppContainer(
 
     fun releaseAllNotesContainer() {
         allNotesContainer = null
-    }
-
-    fun getEditNoteContainer(): EditNoteContainer? {
-        if (editNoteContainer == null) {
-            editNoteContainer = EditNoteContainer(
-                repository = coreContainer.repository,
-                presentationMapper = coreContainer.presentationMapper
-            )
-        }
-        return editNoteContainer
-    }
-
-    fun releaseEditNoteContainer() {
-        editNoteContainer = null
     }
 
     fun getAddNoteContainer(): AddNoteContainer? {
