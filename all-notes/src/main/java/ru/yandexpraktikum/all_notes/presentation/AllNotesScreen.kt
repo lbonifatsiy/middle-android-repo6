@@ -1,7 +1,6 @@
 package ru.yandexpraktikum.all_notes.presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,7 +44,6 @@ import ru.yandexpraktikum.core.presentation.model.NoteUi
 fun AllNotesScreen(
     modifier: Modifier = Modifier,
     onAddNoteClick: () -> Unit,
-    onNoteClick: (Int) -> Unit,
     viewModel: AllNotesViewModel
 ) {
     val scope = rememberCoroutineScope()
@@ -74,7 +72,6 @@ fun AllNotesScreen(
         ) {
             NotesList(
                 notes = notes,
-                onNoteClick = onNoteClick,
                 onDeleteClick = { note ->
                     noteToDelete = note
                     showDialog = true
@@ -115,14 +112,12 @@ fun AllNotesScreen(
 @Composable
 fun NotesList(
     notes: List<NoteUi>,
-    onNoteClick: (Int) -> Unit,
     onDeleteClick: (NoteUi) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(notes) { note ->
             NoteItem(
                 note = note,
-                onNoteClick = onNoteClick,
                 onDeleteClick = onDeleteClick
             )
         }
@@ -132,7 +127,6 @@ fun NotesList(
 @Composable
 fun NoteItem(
     note: NoteUi,
-    onNoteClick: (Int) -> Unit,
     onDeleteClick: (NoteUi) -> Unit
 ) {
     Row(
@@ -146,9 +140,6 @@ fun NoteItem(
             modifier = Modifier
                 .padding(16.dp)
                 .weight(1f)
-                .clickable {
-                    onNoteClick(note.id)
-                }
         ) {
             Text(text = note.title, style = MaterialTheme.typography.titleMedium)
             Text(text = note.content, style = MaterialTheme.typography.bodyMedium)
