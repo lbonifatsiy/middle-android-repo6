@@ -14,29 +14,50 @@ class AppContainer(
         CoreContainer(context)
     }
 
-    var allNotesContainer: AllNotesContainer? = null
-    var editNoteContainer: EditNoteContainer? = null
-    var addNoteContainer: AddNoteContainer? = null
+    private var allNotesContainer: AllNotesContainer? = null
+    private var editNoteContainer: EditNoteContainer? = null
+    private var addNoteContainer: AddNoteContainer? = null
 
 
-    fun initAllNotesContainer() {
-        allNotesContainer = AllNotesContainer(
-            repository = coreContainer.repository,
-            presentationMapper = coreContainer.presentationMapper
-        )
+    fun getAllNotesContainer(): AllNotesContainer? {
+        if (allNotesContainer == null) {
+            allNotesContainer = AllNotesContainer(
+                repository = coreContainer.repository,
+                presentationMapper = coreContainer.presentationMapper
+            )
+        }
+        return allNotesContainer
     }
 
-    fun initEditNoteContainer() {
-        editNoteContainer = EditNoteContainer(
-            repository = coreContainer.repository,
-            presentationMapper = coreContainer.presentationMapper
-        )
+    fun releaseAllNotesContainer() {
+        allNotesContainer = null
     }
 
-    fun initAddNoteContainer() {
-        addNoteContainer = AddNoteContainer(
-            repository = coreContainer.repository,
-            presentationNoteMapper = coreContainer.presentationMapper
-        )
+    fun getEditNoteContainer(): EditNoteContainer? {
+        if (editNoteContainer == null) {
+            editNoteContainer = EditNoteContainer(
+                repository = coreContainer.repository,
+                presentationMapper = coreContainer.presentationMapper
+            )
+        }
+        return editNoteContainer
+    }
+
+    fun releaseEditNoteContainer() {
+        editNoteContainer = null
+    }
+
+    fun getAddNoteContainer(): AddNoteContainer? {
+        if (addNoteContainer == null) {
+            addNoteContainer = AddNoteContainer(
+                repository = coreContainer.repository,
+                presentationNoteMapper = coreContainer.presentationMapper
+            )
+        }
+        return addNoteContainer
+    }
+
+    fun releaseAddNoteContainer() {
+        addNoteContainer = null
     }
 }
