@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "ru.yandexpraktikum.notekeeper"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "ru.yandexpraktikum.notekeeper"
