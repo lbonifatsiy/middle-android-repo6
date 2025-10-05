@@ -6,27 +6,28 @@ import ru.yandexpraktikum.core.data.db.NoteDao
 import ru.yandexpraktikum.core.data.mappers.DataNoteMapper
 import ru.yandexpraktikum.core.domain.model.Note
 import ru.yandexpraktikum.core.domain.repository.NotesRepository
+import javax.inject.Inject
 
-/**
- * TODO("Add documentation")
- */
-class NotesRepositoryImpl(
+internal class NotesRepositoryImpl @Inject constructor(
     private val noteDao: NoteDao,
     private val noteMapper: DataNoteMapper
-): NotesRepository {
+) : NotesRepository {
     override suspend fun insertNote(note: Note) {
         return noteDao.insert(
-            noteMapper.mapToEntity(note))
+            noteMapper.mapToEntity(note)
+        )
     }
 
     override suspend fun deleteNote(note: Note) {
         noteDao.delete(
-            noteMapper.mapToEntity(note))
+            noteMapper.mapToEntity(note)
+        )
     }
 
     override suspend fun updateNote(note: Note): Int {
         return noteDao.update(
-            noteMapper.mapToEntity(note))
+            noteMapper.mapToEntity(note)
+        )
     }
 
     override fun getAllNotes(): Flow<List<Note>> {

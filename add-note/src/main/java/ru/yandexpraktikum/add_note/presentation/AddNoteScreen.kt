@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import ru.yandexpraktikum.add_note.R
 import ru.yandexpraktikum.core.presentation.model.NoteUi
 
@@ -34,7 +35,7 @@ import ru.yandexpraktikum.core.presentation.model.NoteUi
 fun AddNoteScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    viewModel: AddNoteViewModel
+    viewModel: AddNoteViewModel = hiltViewModel<AddNoteViewModel>()
 ) {
     var title by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
@@ -80,7 +81,6 @@ fun AddNoteScreen(
                 Button(
                     onClick = {
                         val note = NoteUi(title = title, content = content)
-
                         viewModel.insertNote(note)
                         onBackClick()
                     },
