@@ -1,13 +1,7 @@
 package ru.yandexpraktikum.notekeeper
 
 import android.app.Application
-import ru.yandexpraktikum.notekeeper.di.AppContainer
+import dagger.hilt.android.HiltAndroidApp
 
-class NoteKeeperApp: Application() {
-    lateinit var container: AppContainer
-
-    override fun onCreate() {
-        super.onCreate()
-        container = AppContainer(this)
-    }
-}
+@HiltAndroidApp
+class NoteKeeperApp : Application()
